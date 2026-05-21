@@ -18,7 +18,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Shilpa729-bit/CICD.git'
-                echo "Building commit: ${GIT_COMMIT[0..7]}"
+                echo "Build completed from branch main"
             }
         }
 
