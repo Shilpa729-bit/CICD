@@ -15,13 +15,14 @@ pipeline {
 
     stages {
 
-        // ── STAGE 1: Checkout ──────────────────────────
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/Shilpa729-bit/CICD.git'
                 echo "Building commit: ${GIT_COMMIT[0..7]}"
             }
         }
 
     }
 }
+
+    
