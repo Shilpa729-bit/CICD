@@ -49,5 +49,26 @@ print('HTML syntax OK')
             }
         }
 
+        // ── STAGE 3: Security Scan (source code) ───────
+        stage('Security Scan - Source') {
+            steps {
+                sh '''
+                  echo "=== Trivy filesystem scan ==="
+                  trivy fs --exit-code 0 \
+                    --severity HIGH,CRITICAL \
+                    --format table \
+                    --output trivy-fs-report.txt \
+                    .
+                  cat trivy-fs-report.txt
+                '''
+            }
+
+            post {
+                always {
+                    archiveArtifacts artifacts: 'trivy-fs-report.txt', fingerprint: true
+                }
+            }
+        }
+
     }
 }
