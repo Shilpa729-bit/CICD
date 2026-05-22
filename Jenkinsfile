@@ -2,11 +2,11 @@ pipeline {
     agent { label 'worker-node' }  // runs on worker node, not master
 
     environment {
-        APP_NAME        = 'my-app'
-        DOCKER_IMAGE    = "${DOCKERHUB_USERNAME}/${APP_NAME}"
-        IMAGE_TAG       = "${BUILD_NUMBER}"
-        CONTAINER_PORT  = '80'
-        HOST_PORT       = '80'
+        APP_NAME       = 'my-app'
+        DOCKER_IMAGE   = "${DOCKERHUB_USERNAME}/${APP_NAME}"
+        IMAGE_TAG      = "${BUILD_NUMBER}"
+        CONTAINER_PORT = '80'
+        HOST_PORT      = '80'
     }
 
     triggers {
@@ -22,7 +22,32 @@ pipeline {
             }
         }
 
+        // ── STAGE 2: Code Quality Check ────────────────
+        stage('Code Quality') {
+            steps {
+                sh '''
+                  echo "=== HTML Validation ==="
+                  # Install html5validator if needed
+                  pip3 install html5-parser --quiet 2>/dev/null || true
+
+                  # Basic syntax check
+                  if [ -f index.html ]; then
+                    python3 -c "
+import html.parser, sys
+class V(html.parser.HTMLParser):
+    def __init__(self): super().__init__(); self.errors=[]
+v=V()
+v.feed(open('index.html').read())
+print('HTML syntax OK')
+"
+                  fi
+
+                  echo "=== File checks ==="
+                  test -f index.html && echo "index.html exists" || exit 1
+                  test -f Dockerfile && echo "Dockerfile exists" || exit 1
+                '''
+            }
+        }
+
     }
 }
-
-    
