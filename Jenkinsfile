@@ -212,21 +212,18 @@ print('HTML syntax OK')
             }
         }
 
-        // ── STAGE 8+9: Pull & Deploy on Target VM ──────
+                // ── STAGE 8+9: Pull & Deploy on Target VM ──────
         stage('Deploy to Target VM') {
             steps {
                 withCredentials([
                     sshUserPrivateKey(
                         credentialsId: 'TARGET_VM_SSH',
-                        keyFileVariable: 'SSH_KEY'
+                        keyFileVariable: 'SSH_KEY',
+                        usernameVariable: 'VM_USER'
                     ),
                     string(
                         credentialsId: 'TARGET_VM_HOST',
                         variable: 'VM_HOST'
-                    ),
-                    string(
-                        credentialsId: 'TARGET_VM_USER',
-                        variable: 'VM_USER'
                     ),
                     string(
                         credentialsId: 'DOCKERHUB_USERNAME',
