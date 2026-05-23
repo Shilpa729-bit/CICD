@@ -142,7 +142,7 @@ print('HTML syntax OK')
             }
             steps {
                 withCredentials([
-                    sshUserPrivateKey(credentialsId: 'TARGET_VM_SSH',
+                    sshUserPrivateKey(credentialsId: 'STAGING_VM_SSH',
                                       keyFileVariable: 'SSH_KEY',
                                       usernameVariable: 'VM_USER'),
                     string(credentialsId: 'TARGET_VM_HOST_STAGING', variable: 'VM_HOST')
