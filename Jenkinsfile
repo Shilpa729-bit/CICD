@@ -138,7 +138,7 @@ print('HTML syntax OK')
         // ── Deploy to STAGING (development branch only) ──
         stage('Deploy to Staging') {
             when {
-                branch 'main'
+                branch 'dev'
             }
             steps {
                 withCredentials([
@@ -172,7 +172,7 @@ EOF
         // ── Deploy to PRODUCTION (master branch only) ──
         stage('Deploy to Production') {
             when {
-                branch 'dev'
+                branch 'main'
             }
             steps {
                 withCredentials([
