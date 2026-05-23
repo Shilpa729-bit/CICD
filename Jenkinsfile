@@ -179,7 +179,7 @@ EOF
                     sshUserPrivateKey(credentialsId: 'TARGET_VM_SSH',
                                       keyFileVariable: 'SSH_KEY',
                                       usernameVariable: 'VM_USER'),
-                    string(credentialsId: 'TARGET_VM_HOST_PROD', variable: 'VM_HOST')
+                    string(credentialsId: 'TARGET_VM_HOST', variable: 'VM_HOST')
                 ]) {
                     sh '''
                       export DOCKER_IMAGE=${DOCKERHUB_USERNAME}/${APP_NAME}
